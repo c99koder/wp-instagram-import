@@ -46,19 +46,19 @@ def create_tag(name):
 		{
 			'name': name
 		})
-	assert p.status_code == 200, "Unable to create WordPress tag"
+	assert p.status_code == 201, "Unable to create WordPress tag"
 	print("Created tag ID %i" % (p.json()['id']))
 	return p.json()['id']
 
 def create_media(filename, content_type, post_id, date_utc):
-	assert os.path.exists(path), "media file not found"
+	assert os.path.exists(filename), "media file not found"
 	data = open(filename, 'rb').read()
 	p = wpapi.post("media", data, headers={
 	    'cache-control': 'no-cache',
 	    'content-disposition': 'attachment; filename=%s' % (os.path.basename(filename)),
 	    'content-type': '%s' % (content_type)
 	})
-	assert p.status_code == 200, "Unable to upload WordPress media"
+	assert p.status_code == 201, "Unable to upload WordPress media"
 	p = wpapi.post("media/" + str(p.json()['id']), 
 		{
 			'status': 'publish',
@@ -104,7 +104,7 @@ def create_post(post):
 			'title': title,
 			'tags': post_tags
 		})
-	assert p.status_code == 200, "Unable to create WordPress post"
+	assert p.status_code == 201, "Unable to create WordPress post"
 	print("Created post ID %i" % (p.json()['id']))
 	return p.json()['id']
 
