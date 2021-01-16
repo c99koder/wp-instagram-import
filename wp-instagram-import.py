@@ -71,14 +71,17 @@ def create_media(filename, content_type, post_id, date_utc):
 	return p.json()['id']
 
 def create_post(post):
-	title = re.sub('\n$', '', post.caption)
+	if post.caption == None:
+		title = post.date_utc.isoformat()
+	else:
+		title = re.sub('\n$', '', post.caption)
 	content = '[gallery link="file" size="large" columns="1"][playlist type=video]'
 
 	while re.search('\s#\w+$', title) != None:
 		title = re.sub('\s#\w+$', '', title)
 		pass
 
-	split = title.partition('\n')
+	split = title.strip().partition('\n')
 	title = split[0]
 	content = split[2] + split[1] + content
 
