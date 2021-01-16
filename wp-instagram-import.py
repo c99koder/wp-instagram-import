@@ -36,7 +36,8 @@ wpapi = API(
     basic_auth = True,
     user_auth = True,
     consumer_key = "",
-    consumer_secret = ""
+    consumer_secret = "",
+    timeout = 60
 )
 category_id = -1
 tags = {}
@@ -70,17 +71,17 @@ def create_media(filename, content_type, post_id, date_utc):
 	return p.json()['id']
 
 def create_post(post):
-	title = post.caption
+	title = re.sub('\n$', '', post.caption)
 	content = '[gallery link="file" size="large" columns="1"][playlist type=video]'
-#	split = post.caption.partition('\n')
-#	title = split[0]
-#	content = split[2] + split[1] + content
 
 	while re.search('\s#\w+$', title) != None:
 		title = re.sub('\s#\w+$', '', title)
 		pass
 
-	title = re.sub('\n$', '', title)
+	split = title.partition('\n')
+	title = split[0]
+	content = split[2] + split[1] + content
+
 	print("Title: " + title)
 	print("Content: " + content)
 
@@ -145,7 +146,6 @@ assert category_id != -1, "Unable to find requested WordPress category"
 
 posts = wpapi.get("posts?per_page=1&categories=" + str(category_id))
 assert posts.status_code == 200, "Unable to fetch posts from WordPress"
-
 latest_post_date = datetime.fromisoformat(posts.json()[0]['date_gmt'] + "+00:00")
 print("Most recent post in category: %s" % (latest_post_date))
 
