@@ -17,6 +17,8 @@ Open the Python script and set your credentials and configuration at the top of 
  You may also want to customize the title / content values on lines 73 and 74. By default, the Instagram caption will be used as the title and the post
  content will contain shortcodes to display a gallery of photos and videos
 
+ __Optional:__ Install https://wordpress.org/plugins/rest-api-meta-support to allow storing Instagram URLs in the post metadata for future reference
+
 ## Usage
 Check your Python version and make sure version 3.7 or newer is installed on your system:
 ```

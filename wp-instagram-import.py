@@ -103,7 +103,8 @@ def create_post(post):
 			'categories': [str(category_id)],
 			'content': content,
 			'title': title,
-			'tags': post_tags
+			'tags': post_tags,
+			'meta': {'instagram_link': 'https://instagram.com/p/' + post.shortcode + '/'}
 		})
 	assert p.status_code == 201, "Unable to create WordPress post"
 	print("Created post ID %i" % (p.json()['id']))
