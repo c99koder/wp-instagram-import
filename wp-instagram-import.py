@@ -115,6 +115,8 @@ def create_post(post):
 
 def upload(post_id, url, extension, mime_type, date_utc):
 	print("Downloading %s to %s/%i%s" % (url, DOWNLOAD_PATH, post_id, extension))
+	if os.path.exists(DOWNLOAD_PATH + "/" + str(post_id) + extension):
+		os.remove(DOWNLOAD_PATH + "/" + str(post_id) + extension)
 	result = L.download_pic(filename=DOWNLOAD_PATH + "/" + str(post_id), url=url, mtime=date_utc)
 	assert result == True, "Download failed"
 	create_media(DOWNLOAD_PATH + "/" + str(post_id) + extension, mime_type, post_id, date_utc)
