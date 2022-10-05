@@ -32,9 +32,11 @@ $ pip3 install requests instaloader wordpress-api awesome-slugify
 
 Run the Python script from the terminal and it will import any photos or videos from Instagram that are more recent than the last post in the __WORDPRESS_CATEGORY__
 
+## Alternative Version using WP-CLI
+An alternative version of this script is available as `wp-instagram-import-cli.py` that uses the local WordPress CLI instead of the REST API.
 # License
 
-Copyright (C) 2021 Sam Steele. Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a
+Copyright (C) 2022 Sam Steele. Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a
 copy of the License at
 
 http://www.apache.org/licenses/LICENSE-2.0
