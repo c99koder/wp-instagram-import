@@ -26,6 +26,11 @@ WORDPRESS_USER = 'admin'
 DOWNLOAD_PATH = '/tmp'
 
 L = instaloader.Instaloader()
+L = instaloader.Instaloader()
+try:
+    L.load_session_from_file(INSTAGRAM_PROFILE)
+except FileNotFoundError:
+    print("Logging into Instagram can make this script more reliable. Try: instaloader -l {INSTAGRAM_PROFILE}")
 category_id = -1
 user_id = -1
 tags = {}
