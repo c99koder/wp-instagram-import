@@ -26,7 +26,6 @@ WORDPRESS_USER = 'admin'
 DOWNLOAD_PATH = '/tmp'
 
 L = instaloader.Instaloader()
-L = instaloader.Instaloader()
 try:
     L.load_session_from_file(INSTAGRAM_PROFILE)
 except FileNotFoundError:
@@ -150,8 +149,11 @@ print("Fetching Instagram profile for %s" % (INSTAGRAM_PROFILE))
 profile = Profile.from_username(L.context, INSTAGRAM_PROFILE)
 posts = profile.get_posts()
 
+shouldPurgeCache = False
+
 for post in posts:
 	if datetime.fromisoformat(post.date_utc.isoformat() + "+00:00") > latest_post_date:
+		shouldPurgeCache = True
 		if post.typename == "GraphImage":
 			upload_image(post)
 		elif post.typename == "GraphVideo":
@@ -162,3 +164,6 @@ for post in posts:
 			print("Unsupported post type: %s" % (post.typename))
 	else:
 		break
+
+if shouldPurgeCache:
+	subprocess.run([WP_CLI, 'cloudflare', 'cache_purge', '--path=' + WORDPRESS_PATH])
